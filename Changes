@@ -1,0 +1,4 @@
+0.01 Not Released
+  - Behaves non-blocking if event has subscribers
+  - Provides a Mojolicious::Command
+  - Provides a Mojolicious::Plugin
