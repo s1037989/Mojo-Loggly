@@ -1,0 +1,70 @@
+NAME
+    Mojo::Loggly - Loggly API implementation for the Mojolicious framework
+
+VERSION
+    0.01
+
+SYNOPSIS
+      use Mojo::Loggly;
+
+      my $loggly = Mojo::Loggly->new(
+                     config => {
+                       token => 'get your token from loggly.com',
+                       #apiurl => 'you do not need to set this',
+                     },
+                   );
+
+      $loggly->on(log => sub {
+        my ($loggly, $ua, $tx) = @_;
+        say $tx->res->body;
+      });
+
+      say $loggly->log(
+        {whatever => 123},
+        qw(tags)
+      );
+
+      Mojo::IOLoop->start;
+
+DESCRIPTION
+    Mojo::Loggly is an implementation of the Loggly API and is non-blocking
+    thanks to Mojo::IOLoop from the wonderful Mojolicious framework.
+
+    It currently sends a log event to Loggly.
+
+    This class inherits from Mojo::EventEmitter.
+
+EVENTS
+    Mojo::Loggly inherits all events from Mojo::EventEmitter and can emit
+    the following new ones.
+
+  log
+    Log
+
+ATTRIBUTES
+  config
+    Holds the configuration hash.
+
+  token
+    Accesses the token element of "config". Can be overridden by the
+    environment variable LOGGLY_TOKEN. This attribute is required to have a
+    value.
+
+  apiurl
+    Accesses the apiurl element of "config". Can be overridden by the
+    environment variable LOGGLY_APIURL.
+
+METHODS
+  log
+      $self = $self->log($log, qw(tags));
+
+    $log is either a HASH or ARRAY ref and converted to JSON, or a scalar
+    and sent as plaintext.
+
+COPYRIGHT
+    This program is free software, you can redistribute it and/or modify it
+    under the terms of the Artistic License version 2.0.
+
+AUTHOR
+    Stefan Adams - "sadams@cpan.org"
+
